@@ -87,7 +87,6 @@ Follow these steps to set up and run the Volumetric Scene API locally.
     AWS_REGION_NAME=your-aws-region # e.g., us-east-1
     S3_BUCKET_NAME=your-splat-bucket-name
     ```
-    **IMPORTANT:** Never commit your actual `.env` file to version control. The `.gitignore` should exclude it.
 
 3.  **Build and Run with Docker Compose:**
     ```bash
@@ -98,8 +97,6 @@ Follow these steps to set up and run the Volumetric Scene API locally.
     * Start PostgreSQL (`db`) and Redis (`redis`) containers.
     * Run FastAPI application accessible at `http://localhost:8000`.
     * Start the Celery worker for background tasks.
-
-    *(**Note:** Ensure your database models are created on startup. You might need to add Alembic migrations or a simple startup script to `main.py` to create tables.)*
 
 ---
 
@@ -240,7 +237,6 @@ REDIS_URL = os.getenv("REDIS_URL")
 DATABASE_URL = os.getenv("DATABASE_URL")
 # Add other configurations as needed (SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES)
 
-Note: It's recommended to use Pydantic BaseSettings for robust configuration management in FastAPI projects, as discussed previously. This snippet reflects your provided image.
 app/db.py
 Sets up the SQLAlchemy engine and session for database interactions.
 # app/db.py
@@ -280,11 +276,10 @@ def upload_to_s3(filename, data):
     s3 = boto3.client("s3",
                       aws_access_key_id=AWS_ACCESS_KEY_ID,
                       aws_secret_access_key=AWS_SECRET_ACCESS_KEY) # Region name might be missing here
-
     s3.put_object(Bucket=AWS_BUCKET_NAME, Key=filename, Body=data)
     # Returns an S3 public URL (ensure your bucket policy allows public reads if you use this directly)
     return f"https://{AWS_BUCKET_NAME}[.s3.amazonaws.com/](https://.s3.amazonaws.com/){filename}"
-Note: The s3_utils.py provided in your image is simplified. For a robust solution, you'd likely pass region_name to boto3.client as well, and upload_to_s3 might be an async function if called from FastAPI's async routes. Also, handling UploadFile objects directly (as in previous discussions) is more common than filename, data.
+
 app/tasks.py
 Defines Celery tasks for background processing.
 # app/tasks.py
@@ -301,7 +296,6 @@ def process_scene_async(filename, s3_url, format):
     # Call the actual processing logic from scene_processor.py
     return process_scene(s3_url, format)
 
-Note: You'll need to create app/scene_processor.py with the process_scene function that handles the actual 3D data processing (e.g., using Open3D).
 app/scene_processor.py
 Placeholder for the core 3D scene processing logic.
 # app/scene_processor.py
@@ -335,14 +329,6 @@ async def upload_scene(file: UploadFile = File(...)):
     
     return {"status": "uploaded", "s3_url": s3_url}
 
-Note: This main.py snippet is simplified. It lacks user authentication, dependency injection for database sessions, and proper error handling, which are crucial for a production-ready API. Your initial app/api/auth.py and app/api/upload.py and app/services structure is more robust. This example reflects the image you provided.
-Live Demo / Preview
-▶️ Watch a quick demo on YouTube (Coming Soon!)
-(Once you have a frontend or video showcasing the API in action, replace this with the actual link.)
-Contributing
-We welcome contributions! Please see our CONTRIBUTING.md for details on how to get started.
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 📫 Let's connect:             [X/Twitter](https://x.com/@GeoNeo790) 
 [Email](mailto:nyvegos@gmail.com)
