@@ -343,3 +343,7 @@ Contributing
 We welcome contributions! Please see our CONTRIBUTING.md for details on how to get started.
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+📫 Let's connect:             [X/Twitter](https://x.com/@GeoNeo790) 
+[Email](mailto:nyvegos@gmail.com)
+[Connect on Signal](https://signal.me/#eu/1vhnqxY7atTKFAOymSbaPMEiSAC31MY2cD3pOuQr82ZdbpPCTtBLK5UddmrC06N_)
