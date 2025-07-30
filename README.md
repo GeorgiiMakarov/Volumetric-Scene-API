@@ -76,7 +76,6 @@ Follow these steps to set up and run the Volumetric Scene API locally.
     POSTGRES_USER=user
     POSTGRES_PASSWORD=pass
     POSTGRES_DB=volumetric # As per docker-compose.yml
-    SECRET_KEY=supersecretkey_replace_with_a_long_random_string # IMPORTANT!
     ALGORITHM=HS256
     ACCESS_TOKEN_EXPIRE_MINUTES=30
     REDIS_URL=redis://redis:6379/0
@@ -194,7 +193,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
-    volumes: # IMPORTANT: Add this for persistent DB data
+
       - postgres_data:/var/lib/postgresql/data
 
   worker:
